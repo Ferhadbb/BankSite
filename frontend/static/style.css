@@ -1,0 +1,785 @@
+/* --- Reset & Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #f0f0f0; /* Slightly lighter gray for base background */
+    color: #222; /* Darker gray for primary text, not full black for softness */
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: #333; /* Dark gray for links */
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #000; /* Black for link hover */
+    text-decoration: underline;
+}
+
+/* --- Utility Classes --- */
+.card-style {
+    background-color: #ffffff;
+    border-radius: 10px; /* Slightly less rounded for a sharper look */
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    border: 1px solid #e0e0e0; /* Subtle border for cards */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.card-style:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.page-header {
+    text-align: left;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc; /* Slightly darker separator */
+}
+
+.page-header h1 {
+    font-size: 2.2em; /* Adjusted size */
+    color: #111; /* Near black for titles */
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.page-header p {
+    color: #555; /* Medium gray for secondary text */
+    font-size: 1.05em;
+}
+
+/* --- Navbar --- */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid #dcdcdc;
+    padding: 0.9rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #000;
+}
+
+.nav-links ul {
+    list-style-type: none !important; /* Ensure no bullets */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li {
+    margin: 0; /* Remove individual li margin */
+    display: flex; 
+    align-items: center;
+}
+
+.nav-links li:not(:last-child) {
+    margin-right: 10px; /* Space between links */
+}
+
+/* Minimal base style for <a> tags within .nav-links */
+.nav-links li a {
+    display: inline-block;
+    font-size: 0.95em; /* Unified font size */
+    font-weight: 500;
+    text-decoration: none;
+    line-height: normal;
+    color: #333; /* Default text color for all nav links */
+    background-color: transparent !important; /* Ensure no background */
+    border: none !important; /* Ensure no border */
+    padding: 8px 10px; /* Consistent padding */
+    border-radius: 4px; /* Slight radius for hover if any background is added later */
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-links li a:hover {
+    color: #000; /* Darken text on hover */
+    text-decoration: underline; /* Underline on hover for plain links */
+    background-color: transparent !important; /* Ensure hover also has no background */
+}
+
+/* Remove specific styles that made them look like buttons */
+
+.nav-links li.nav-auth-item a {
+    /* Inherits all from .nav-links li a */
+}
+
+.nav-links li.nav-auth-item a:hover {
+    /* Inherits all from .nav-links li a:hover */
+}
+
+.nav-links li.nav-item-dashboard a {
+    /* Inherits all from .nav-links li a */
+    font-weight: 600; /* Slightly bolder for the main dashboard link */
+    color: #000;
+}
+
+.nav-links li.nav-item-dashboard a:hover {
+    /* Inherits all from .nav-links li a:hover */
+    color: #000;
+}
+
+.nav-links li.logout-link a {
+    /* Inherits all from .nav-links li a */
+}
+
+.nav-links li.logout-link a:hover {
+    /* Inherits all from .nav-links li a:hover */
+}
+
+/* --- Main Container --- */
+.container {
+    width: 90%;
+    max-width: 1000px; /* Slightly reduced max-width */
+    margin: 30px auto;
+    padding: 0;
+}
+
+/* --- Flashed Messages --- */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash {
+    padding: 12px 18px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+    border: 1px solid transparent;
+}
+
+.flash.success {
+    background-color: #e6e6e6; /* Light gray for success */
+    color: #222;
+    border-color: #c0c0c0;
+}
+
+.flash.error {
+    background-color: #f8d7da; /* Desaturated red for errors */
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.flash.info {
+    background-color: #d1ecf1; /* Light blueish-gray for info */
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.flash.warning {
+    background-color: #fff3cd; /* Light yellow-gray for warning */
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Authentication Forms (Login/Register) --- */
+.auth-form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 35px 40px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+}
+
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #111;
+    font-size: 1.7em;
+    font-weight: 600;
+}
+
+.auth-form div {
+    margin-bottom: 20px;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"],
+.auth-form input[type="email"],
+.auth-form input[type="number"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: #fdfdfd;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #555; /* Darker gray focus */
+    box-shadow: 0 0 0 2px rgba(85, 85, 85, 0.2);
+    background-color: #fff;
+}
+
+.auth-form button[type="submit"] {
+    width: 100%;
+    padding: 11px;
+    background-color: #222; /* Black button */
+    color: white;
+    border: 1px solid #222;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.auth-form button[type="submit"]:hover {
+    background-color: #000; /* Darker black */
+    border-color: #000;
+}
+
+.auth-form button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+.auth-form p {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+/* --- General Styled Forms (e.g., Transfer Funds) --- */
+.styled-form .form-group {
+    margin-bottom: 20px;
+}
+
+.styled-form label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.styled-form .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: #fdfdfd;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.styled-form select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27292.4%27%20height%3D%27292.4%27%3E%3Cpath%20fill%3D%27%23333333%27%20d%3D%27M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%27%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 0.65em auto;
+    padding-right: 2.5rem; /* Make space for the arrow */
+}
+
+.styled-form .form-control:focus {
+    outline: none;
+    border-color: #555;
+    box-shadow: 0 0 0 2px rgba(85, 85, 85, 0.2);
+    background-color: #fff;
+}
+
+.styled-form .form-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.styled-form .form-text {
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.styled-form .form-text p {
+    margin-bottom: 5px;
+}
+
+.styled-form .form-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- General Button Styles --- */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: #222;
+    color: #fff;
+    border-color: #222;
+}
+
+.btn-primary:hover {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+    border-color: #ccc;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+    border-color: #bbb;
+    color: #222;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Dashboard Actions Specific Styling */
+.dashboard-actions {
+    padding: 20px; /* Override card-style padding if needed or make it consistent */
+    text-align: left; /* Or center, depending on desired look */
+    margin-bottom: 25px;
+}
+
+.dashboard-actions .btn {
+    margin-right: 10px; /* Space between buttons if multiple */
+}
+
+/* --- Dashboard Overview --- */
+.accounts-list h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.accounts-list ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.accounts-list .account-item.card-style {
+    margin-bottom: 0; /* Gap is handled by grid */
+}
+
+.accounts-list .account-item a {
+    display: block;
+    padding: 18px 22px;
+    color: #222;
+    text-decoration: none;
+    border-radius: 10px; /* Inherit from card-style if defined there */
+    transition: background-color 0.15s ease-in-out;
+}
+
+.accounts-list .account-item a:hover {
+    background-color: #f9f9f9; /* Very subtle hover for list items */
+    text-decoration: none;
+}
+
+.account-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.account-number {
+    font-size: 1.15em;
+    font-weight: 500;
+    color: #111;
+}
+
+.account-type {
+    font-size: 0.85em;
+    color: #555;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.account-balance {
+    font-size: 1.1em;
+}
+
+.account-balance strong {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #222; /* Main text color for balance, less emphasis */
+}
+
+.no-accounts-message {
+    text-align: center;
+    padding: 40px;
+    color: #555;
+}
+
+/* --- Account Sub-Navigation --- */
+.account-sub-nav {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+}
+
+.account-sub-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px; /* Reduced gap */
+}
+
+.account-sub-nav a {
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    color: #444;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.account-sub-nav a:hover {
+    background-color: #e7e7e7;
+    color: #000;
+    text-decoration: none;
+}
+
+.account-sub-nav a.active {
+    background-color: #333; /* Dark gray for active */
+    color: #fff;
+}
+
+/* --- Account Detail, Transactions, Cards Shared --- */
+.account-detail-container,
+.account-transactions-container,
+.account-cards-container {
+    padding: 0; /* Container provides padding now */
+}
+
+/* Account Summary (Details Page) */
+.account-summary .balance {
+    font-size: 1.7em;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.account-summary .balance strong {
+    font-weight: 600;
+    color: #111; /* Same as non-strong to de-emphasize color */
+}
+
+/* Action Forms (Deposit/Withdraw) */
+.action-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.action-form {
+    background-color: #f9f9f9; /* Lighter background for forms within cards */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9e9e9;
+}
+
+.action-form h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.15em;
+    font-weight: 500;
+    color: #222;
+}
+
+.action-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.action-form input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 1em;
+    background-color: #fff;
+}
+
+.action-form input:focus {
+    outline: none;
+    border-color: #555;
+    box-shadow: 0 0 0 2px rgba(85, 85, 85, 0.2);
+}
+
+.action-form button[type="submit"] {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #444; /* Medium-dark gray for actions */
+    color: white;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.action-form button[type="submit"]:hover {
+    background-color: #222; /* Darker gray on hover */
+    border-color: #222;
+}
+.action-form button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Transaction History Table */
+.transaction-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.transaction-history th,
+.transaction-history td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.transaction-history th {
+    background-color: #f5f5f5;
+    font-weight: 500;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+.transaction-history tr:hover {
+    background-color: #fcfcfc;
+}
+
+.transaction-history .tx-type {
+    font-weight: 500;
+}
+
+.transaction-history .tx-type.deposit,
+.transaction-history .tx-type.interest,
+.transaction-history .tx-type.transfer_in {
+    color: #28a745; /* Standard green for positive */
+}
+
+.transaction-history .tx-type.withdrawal,
+.transaction-history .tx-type.transfer_out {
+    color: #dc3545; /* Standard red for negative */
+}
+
+.transaction-history .tx-amount.positive {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.transaction-history .tx-amount.negative {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+/* Cards Management */
+.cards-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.cards-list .card-item {
+    background-color: #f9f9f9;
+    padding: 15px 20px;
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.cards-list .card-item span {
+    display: block;
+    color: #333;
+}
+
+.issue-card-form button[type="submit"] {
+    background-color: #333; /* Dark gray for issue card */
+    color: white;
+    padding: 10px 20px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.issue-card-form button[type="submit"]:hover {
+    background-color: #111; /* Black on hover */
+    border-color: #111;
+}
+
+.issue-card-form button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+.form-hint {
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: 40px;
+    background-color: #fafafa; /* Very light gray footer */
+    color: #555;
+    font-size: 0.85em;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Responsive Adjustments (Example) */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.8rem 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .nav-links ul {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .nav-links li {
+        margin-left: 0;
+        margin-bottom: 8px;
+        width: 100%;
+    }
+    .nav-links a {
+        display: block;
+        padding: 10px 8px;
+        background-color: rgba(0,0,0,0.02);
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    .container {
+        width: 95%;
+    }
+    .page-header h1 {
+        font-size: 1.9em;
+    }
+    .action-forms-grid {
+        grid-template-columns: 1fr; /* Stack forms on smaller screens */
+    }
+    .accounts-list ul {
+        grid-template-columns: 1fr; /* Stack account cards on mobile */
+    }
+}
+
+/* Profile Page Specific Styles */
+.profile-info.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.profile-info p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.profile-info p strong {
+    color: #333; /* Darker text for labels */
+}
+
+/* Re-use .styled-form and .btn from previous styles if they are suitable */
+/* Add any additional specific styling for profile form if needed */
+
+/* Ensure page title (h2) and section title (h3) have good spacing */
+.container h2 {
+    margin-bottom: 20px;
+}
+
+.container h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}

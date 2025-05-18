@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Account {{ account.account_number }} - Transactions{% endblock %}
+
+{% block content %}
+<div class="account-transactions-container">
+    <header class="page-header">
+        <h1>Account: {{ account.account_number }}</h1>
+        <p>Transaction History</p>
+    </header>
+
+    <nav class="account-sub-nav">
+        <ul>
+            <li><a href="{{ url_for('account_details', account_id=account.id) }}">Details & Actions</a></li>
+            <li><a href="{{ url_for('account_transactions', account_id=account.id) }}" class="active">Transactions</a></li>
+            <li><a href="{{ url_for('account_cards', account_id=account.id) }}">Cards</a></li>
+            <li><a href="{{ url_for('dashboard') }}">&larr; Back to Accounts Overview</a></li>
+        </ul>
+    </nav>
+
+    <section class="transaction-history card-style">
+        <h2>Transaction Log</h2>
+        {% if transactions %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in transactions %}
+                    <tr>
+                        <td>{{ tx.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td class="tx-type {{tx.type | lower}}">{{ tx.type | capitalize }}</td>
+                        <td class="tx-amount {% if tx.type == 'deposit' or tx.type == 'interest' %}positive{% elif tx.type == 'withdrawal' %}negative{% endif %}">
+                            {% if tx.type == 'deposit' or tx.type == 'interest' %}+{% elif tx.type == 'withdrawal' %}-{% endif %}
+                            ${{ "%.2f"|format(tx.amount) }}
+                        </td>
+                        <td>{{ tx.description or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No transactions found for this account yet.</p>
+        {% endif %}
+    </section>
+
+</div>
+{% endblock %} 

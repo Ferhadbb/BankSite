@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Overview - {{ session.username }}{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <header class="page-header">
+        <h1>Welcome, {{ user.full_name or user.username }}!</h1>
+        <p>Your accounts overview. Select an account to see more details or initiate a transfer.</p>
+    </header>
+
+    <div class="dashboard-actions card-style">
+        <a href="{{ url_for('transfer_funds') }}" class="btn btn-primary">Transfer Funds</a>
+        <a href="{{ url_for('open_account') }}" class="btn btn-secondary">Open New Account</a>
+    </div>
+
+    {% if accounts %}
+        <div class="accounts-list">
+            <h2>Your Accounts</h2>
+            <ul>
+                {% for account in accounts %}
+                    <li class="account-item card-style">
+                        <a href="{{ url_for('account_details', account_id=account.id) }}">
+                            <div class="account-info">
+                                <span class="account-number">{{ account.account_number }}</span>
+                                <span class="account-type">({{ account.account_type }})</span>
+                            </div>
+                            <div class="account-balance">
+                                Balance: <strong>${{ "%.2f"|format(account.balance) }}</strong>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="card-style no-accounts-message">
+            <p>You currently have no open accounts with us.</p>
+            <p>If you believe this is an error, please contact customer support.</p>
+            <!-- Optionally, add a button/link to open a new account if that feature exists -->
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

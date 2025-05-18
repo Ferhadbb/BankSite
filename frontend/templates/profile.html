@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile - MyBank{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>User Profile</h2>
+    
+    <div class="profile-info card">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Full Name:</strong> {{ user.full_name if user.full_name else 'Not set' }}</p>
+    </div>
+
+    <h3>Update Profile</h3>
+    <form method="POST" action="{{ url_for('profile') }}" class="styled-form">
+        <div class="form-group">
+            <label for="full_name">Full Name:</label>
+            <input type="text" id="full_name" name="full_name" value="{{ user.full_name if user.full_name else '' }}" required>
+        </div>
+        <button type="submit" class="btn">Update Full Name</button>
+    </form>
+</div>
+{% endblock %} 

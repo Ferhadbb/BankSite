@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Account {{ account.account_number }} - Cards{% endblock %}
+
+{% block content %}
+<div class="account-cards-container">
+    <header class="page-header">
+        <h1>Account: {{ account.account_number }}</h1>
+        <p>Manage Your Cards</p>
+    </header>
+
+    <nav class="account-sub-nav">
+        <ul>
+            <li><a href="{{ url_for('account_details', account_id=account.id) }}">Details & Actions</a></li>
+            <li><a href="{{ url_for('account_transactions', account_id=account.id) }}">Transactions</a></li>
+            <li><a href="{{ url_for('account_cards', account_id=account.id) }}" class="active">Cards</a></li>
+            <li><a href="{{ url_for('dashboard') }}">&larr; Back to Accounts Overview</a></li>
+        </ul>
+    </nav>
+
+    <section class="cards-management card-style">
+        <h2>Your Cards</h2>
+        {% if cards %}
+            <ul class="cards-list">
+                {% for card in cards %}
+                    <li class="card-item">
+                        <span>Card Number: {{ card.card_number[:4] }} **** **** {{ card.card_number[-4:] }}</span>
+                        <span>Expires: {{ card.expiry_date }}</span>
+                        <span>CVV: ***</span>
+                        <span>Status: {{ 'Active' if card.is_active else 'Inactive' }}</span>
+                        <!-- Add options to deactivate/reactivate or report lost/stolen in a real app -->
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>You have no cards associated with this account.</p>
+        {% endif %}
+        
+        <form action="{{ url_for('issue_card') }}" method="post" class="issue-card-form">
+            <input type="hidden" name="account_id" value="{{ account.id }}">
+            <button type="submit">Issue New Card</button>
+        </form>
+        <p class="form-hint">Note: Maximum 3 cards per account.</p>
+    </section>
+
+</div>
+{% endblock %} 

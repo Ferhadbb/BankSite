@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Account {{ account.account_number }} - Details{% endblock %}
+
+{% block content %}
+<div class="account-detail-container">
+    <header class="page-header">
+        <h1>Account: {{ account.account_number }}</h1>
+        <p>Type: {{ account.account_type }}</p>
+    </header>
+
+    <nav class="account-sub-nav">
+        <ul>
+            <li><a href="{{ url_for('account_details', account_id=account.id) }}" class="active">Details & Actions</a></li>
+            <li><a href="{{ url_for('account_transactions', account_id=account.id) }}">Transactions</a></li>
+            <li><a href="{{ url_for('account_cards', account_id=account.id) }}">Cards</a></li>
+            <li><a href="{{ url_for('dashboard') }}">&larr; Back to Accounts Overview</a></li>
+        </ul>
+    </nav>
+
+    <section class="account-summary card-style">
+        <h2>Account Summary</h2>
+        <p class="balance">Current Balance: <strong>${{ "%.2f"|format(account.balance) }}</strong></p>
+    </section>
+
+    <section class="account-actions card-style">
+        <h2>Account Actions</h2>
+        <div class="action-forms-grid">
+            <div class="action-form">
+                <h4>Deposit Funds</h4>
+                <form action="{{ url_for('deposit') }}" method="post">
+                    <input type="hidden" name="account_id" value="{{ account.id }}">
+                    <div>
+                        <label for="deposit_amount">Amount</label>
+                        <input type="number" id="deposit_amount" name="amount" placeholder="0.00" step="0.01" min="0.01" required>
+                    </div>
+                    <button type="submit">Deposit</button>
+                </form>
+            </div>
+
+            <div class="action-form">
+                <h4>Withdraw Funds</h4>
+                <form action="{{ url_for('withdraw') }}" method="post">
+                    <input type="hidden" name="account_id" value="{{ account.id }}">
+                    <div>
+                        <label for="withdraw_amount">Amount</label>
+                        <input type="number" id="withdraw_amount" name="amount" placeholder="0.00" step="0.01" min="0.01" required>
+                    </div>
+                    <button type="submit">Withdraw</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %} 
